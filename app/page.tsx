@@ -1,4 +1,4 @@
-import { AuthButton } from "@/app/ui/AuthButton";
+import { AuthButton } from "@/app/ui/Buttons/AuthButton";
 import Image from "next/image";
 
 export default function Home() {
