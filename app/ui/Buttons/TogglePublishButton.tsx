@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function TogglePublishButton({
   postId,
@@ -24,12 +25,14 @@ export default function TogglePublishButton({
   };
 
   return (
-    <button
+    <Button
       onClick={togglePublish}
       disabled={isPending}
-      className="text-sm text-green-600 hover:underline"
+      size="sm"
+      variant="default"
+      type="submit"
     >
       {published ? "Unpublish" : "Publish"}
-    </button>
+    </Button>
   );
 }
