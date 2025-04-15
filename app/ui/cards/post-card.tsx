@@ -1,11 +1,24 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Post } from "@/lib/generated/prisma";
 import Link from "next/link";
 import TogglePublishButton from "../Buttons/TogglePublishButton";
 import { AdminPost } from "@/lib/definitions";
+import { useRouter } from "next/navigation";
 
 export function PostCard({ post }: { post: AdminPost }) {
+  const router = useRouter();
+
+  const handleDelete = async (id: string) => {
+    const res = await fetch(`/api/posts/${id}/delete`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      router.refresh();
+    } else {
+      console.error("Failed to delete post");
+    }
+  };
   return (
     <div className="rounded-md border bg-background p-4 shadow-sm hover:shadow transition">
       <div className="flex items-center justify-between">
@@ -16,19 +29,24 @@ export function PostCard({ post }: { post: AdminPost }) {
       </div>
       <p className="text-sm text-muted-foreground mt-2">{post.description}</p>
 
-      <div className="mt-4 flex gap-2">
-        <Link href={`/admin/posts/${post.id}/edit`}>
-          <Button size="sm" variant="outline">
-            Edit
-          </Button>
-        </Link>
-        {/* <form method="POST" action={`/api/posts/${post.id}/toggle`}>
-          <Button size="sm" variant="secondary" type="submit">
-            {post.published ? "Unpublish" : "Publish"}
-          </Button>
-        </form> */}
+      <div className="mt-4 flex gap-2 justify-between">
+        <span>
+          <Link href={`/admin/posts/${post.id}/edit`}>
+            <Button size="sm" variant="outline">
+              📝 Edit
+            </Button>
+          </Link>
+          <TogglePublishButton postId={post.id} published={post.published} />
+        </span>
 
-        <TogglePublishButton postId={post.id} published={post.published} />
+        <Button
+          size="sm"
+          variant="default"
+          onClick={() => handleDelete(post.id)}
+          className="bg-red-500 text-white hover:underline"
+        >
+          Delete
+        </Button>
       </div>
     </div>
   );
