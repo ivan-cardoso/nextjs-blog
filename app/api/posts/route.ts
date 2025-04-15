@@ -1,4 +1,3 @@
-// app/api/posts/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/utils";
@@ -15,16 +14,27 @@ export async function POST(req: Request) {
       );
     }
 
+    // 🔒 Use dummy author for now
+    const author = await prisma.user.findUnique({
+      where: { email: "admin@example.com" },
+    });
+
+    if (!author) {
+      return NextResponse.json({ error: "Author not found" }, { status: 404 });
+    }
+
     const newPost = await prisma.post.create({
       data: {
         title,
         content,
-        // category,
         description,
         slug: slugify(title), // optional: useful for your future post detail page
-        authorId: process.env.NEXTAUTH_SECRET as string, // You can replace this with session.user.id later
+        authorId: author.id, // You can replace this with session.user.id later
         tags: {
-          create: tags.map((tag: string) => ({ name: tag })),
+          connectOrCreate: tags.map((tag: string) => ({
+            where: { name: tag },
+            create: { name: tag },
+          })),
         },
         categories: {
           connect: [{ name: "Frontend" }], // assuming this category already exists

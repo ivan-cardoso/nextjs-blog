@@ -6,6 +6,17 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding database...");
 
+  // Dummy user
+  const user = await prisma.user.upsert({
+    where: { email: "admin@example.com" },
+    update: {},
+    create: {
+      name: "Admin User",
+      email: "admin@example.com",
+      image: "https://i.pravatar.cc/150?u=admin@example.com",
+    },
+  });
+
   // Create categories
   const categories = ["Frontend", "Backend", "DevOps", "UI/UX"];
   for (const name of categories) {

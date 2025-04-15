@@ -38,7 +38,8 @@ export default function NewPostPage() {
     });
 
     if (res.ok) {
-      router.push("/admin/posts");
+      // router.push("/admin/posts");
+      alert("Post Created!");
     } else {
       alert("Failed to create post.");
     }
