@@ -8,6 +8,22 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import ReactMarkdown from "react-markdown";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+} from "@/components/ui/command";
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils"; // used for conditional classes
+
 type PostFormProps = {
   initialData?: {
     id: string;
@@ -34,9 +50,15 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
   const [category, setCategory] = useState(initialData?.category?.id || "");
 
   // Tags are stored as an array of strings (tag names)
+  /* const [selectedTags, setSelectedTags] = useState<string[]>(
+    initialData?.tags?.map((tag) => tag.name) || []
+  ); */
+
+  // Inside your PostForm component
   const [selectedTags, setSelectedTags] = useState<string[]>(
     initialData?.tags?.map((tag) => tag.name) || []
   );
+  const [open, setOpen] = useState(false);
 
   const isEdit = Boolean(initialData);
 
@@ -112,7 +134,7 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
           ))}
         </select>
       </div>
-      <div>
+      {/* <div>
         <Label>Tags (hold Ctrl or Cmd to select multiple)</Label>
         <select
           multiple
@@ -126,6 +148,53 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
             </option>
           ))}
         </select>
+      </div> */}
+
+      <div>
+        <Label>Tags</Label>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              className="w-full justify-between"
+            >
+              {selectedTags.length > 0
+                ? `${selectedTags.length} tag${
+                    selectedTags.length > 1 ? "s" : ""
+                  } selected`
+                : "Select tags"}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+            <Command>
+              <CommandInput placeholder="Search tags..." />
+              <CommandList>
+                <CommandEmpty>No tags found.</CommandEmpty>
+                <CommandGroup>
+                  {tags.map((tag) => {
+                    const isSelected = selectedTags.includes(tag.name);
+                    return (
+                      <CommandItem
+                        key={tag.id}
+                        onSelect={() => {
+                          setSelectedTags((prev) =>
+                            isSelected
+                              ? prev.filter((t) => t !== tag.name)
+                              : [...prev, tag.name]
+                          );
+                        }}
+                      >
+                        <Checkbox checked={isSelected} className="mr-2" />
+                        {tag.name}
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
       <div>
         <Label>Content (Markdown)</Label>
