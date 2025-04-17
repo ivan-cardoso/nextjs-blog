@@ -7,6 +7,7 @@ import { Post } from "@/lib/generated/prisma";
 import { AdminPost } from "@/lib/definitions";
 
 export default async function AdminPostList() {
+  // I could move this to a folder later
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: "desc" },
     include: { tags: true, categories: true },
@@ -29,7 +30,6 @@ export default async function AdminPostList() {
     <div className="space-y-4">
       <h1 className="text-2xl font-semibold">Posts</h1>
       <PostList posts={formattedPosts} />
-      {/* {console.log(posts)} */}
     </div>
   );
 }

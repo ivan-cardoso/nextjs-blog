@@ -37,7 +37,7 @@ export async function POST(req: Request) {
           })),
         },
         categories: {
-          connect: [{ name: "Frontend" }], // assuming this category already exists
+          connect: [{ id: category }],
         },
       },
     });

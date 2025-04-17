@@ -14,12 +14,14 @@ type PostFormProps = {
     title: string;
     description: string;
     content: string;
-    category: string;
-    tags: string[];
+    category: { id: string; name: string };
+    tags: { id: string; name: string }[];
   };
+  categories: { id: string; name: string }[];
+  tags: { id: string; name: string }[];
 };
 
-export function PostForm({ initialData }: PostFormProps) {
+export function PostForm({ initialData, categories, tags }: PostFormProps) {
   const router = useRouter();
 
   const [title, setTitle] = useState(initialData?.title || "");
@@ -27,12 +29,16 @@ export function PostForm({ initialData }: PostFormProps) {
     initialData?.description || ""
   );
   const [content, setContent] = useState(initialData?.content || "");
-  const [category, setCategory] = useState(initialData?.category || "");
-  const [tags, setTags] = useState(initialData?.tags.join(", ") || "");
+
+  // Category is stored as just the ID (string)
+  const [category, setCategory] = useState(initialData?.category?.id || "");
+
+  // Tags are stored as an array of strings (tag names)
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    initialData?.tags?.map((tag) => tag.name) || []
+  );
 
   const isEdit = Boolean(initialData);
-
-  const dummyCategories = ["Frontend", "Backend", "DevOps", "UI/UX"];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +48,7 @@ export function PostForm({ initialData }: PostFormProps) {
       description,
       content,
       category,
-      tags: tags.split(",").map((tag) => tag.trim()),
+      tags: selectedTags,
     };
 
     const res = await fetch(
@@ -58,6 +64,19 @@ export function PostForm({ initialData }: PostFormProps) {
       router.push("/admin/posts");
       router.refresh();
     }
+  };
+
+  const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const options = e.target.options;
+    const selected: string[] = [];
+
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selected.push(options[i].value);
+      }
+    }
+
+    setSelectedTags(selected);
   };
 
   return (
@@ -80,24 +99,33 @@ export function PostForm({ initialData }: PostFormProps) {
       </div>
       <div>
         <Label>Category</Label>
-        {/* <Input value={category} onChange={(e) => setCategory(e.target.value)} /> */}
-
         <select
           className="w-full border rounded px-3 py-2"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Select a category</option>
-          {dummyCategories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
             </option>
           ))}
         </select>
       </div>
       <div>
-        <Label>Tags (comma separated)</Label>
-        <Input value={tags} onChange={(e) => setTags(e.target.value)} />
+        <Label>Tags (hold Ctrl or Cmd to select multiple)</Label>
+        <select
+          multiple
+          value={selectedTags}
+          onChange={handleTagChange}
+          className="w-full border rounded px-3 py-2 h-32"
+        >
+          {tags.map((tag) => (
+            <option key={tag.id} value={tag.name}>
+              {tag.name}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <Label>Content (Markdown)</Label>

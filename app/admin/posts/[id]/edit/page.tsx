@@ -10,6 +10,9 @@ export default async function EditPostPage(context: {
     include: { tags: true, categories: true },
   });
 
+  const categories = await prisma.category.findMany();
+  const tags = await prisma.tag.findMany();
+
   if (!post) return <div>Post not found</div>;
 
   return (
@@ -21,9 +24,11 @@ export default async function EditPostPage(context: {
           title: post.title,
           description: post.description,
           content: post.content as string,
-          category: post.categories[0]?.name || "",
-          tags: post.tags.map((tag) => tag.name),
+          category: post.categories[0],
+          tags: post.tags,
         }}
+        categories={categories}
+        tags={tags}
       />
     </div>
   );
