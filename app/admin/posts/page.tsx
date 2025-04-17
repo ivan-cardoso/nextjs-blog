@@ -27,6 +27,7 @@ export default async function AdminPostList() {
     <div className="space-y-4">
       <h1 className="text-2xl font-semibold">Posts</h1>
       <PostList posts={formattedPosts} />
+      {console.log(posts)}
     </div>
   );
 }
