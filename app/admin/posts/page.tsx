@@ -19,6 +19,8 @@ export default async function AdminPostList() {
     slug: post.slug,
     content: post.content,
     published: post.published,
+    categories: post.categories,
+    tags: post.tags,
     createdAt: post.createdAt.toISOString(),
     updatedAt: post.updatedAt.toISOString(),
   }));
@@ -27,7 +29,7 @@ export default async function AdminPostList() {
     <div className="space-y-4">
       <h1 className="text-2xl font-semibold">Posts</h1>
       <PostList posts={formattedPosts} />
-      {console.log(posts)}
+      {/* {console.log(posts)} */}
     </div>
   );
 }
