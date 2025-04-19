@@ -8,21 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import ReactMarkdown from "react-markdown";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-} from "@/components/ui/command";
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils"; // used for conditional classes
+import { CreatableMultiSelect } from "../inputs/creatable-multiselect";
 
 type PostFormProps = {
   initialData?: {
@@ -47,6 +33,7 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
   const [content, setContent] = useState(initialData?.content || "");
 
   // Category is stored as just the ID (string)
+
   const [category, setCategory] = useState(initialData?.category?.id || "");
 
   // Tags are stored as an array of strings (tag names)
@@ -55,8 +42,14 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
   ); */
 
   // Inside your PostForm component
-  const [selectedTags, setSelectedTags] = useState<string[]>(
+  /* const [selectedTags, setSelectedTags] = useState<string[]>(
     initialData?.tags?.map((tag) => tag.name) || []
+  ); */
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    initialData?.tags || []
+  );
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    initialData?.category ? [initialData.category.name] : []
   );
   const [open, setOpen] = useState(false);
 
@@ -69,8 +62,8 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
       title,
       description,
       content,
-      category,
       tags: selectedTags,
+      categories: selectedCategories,
     };
 
     const res = await fetch(
@@ -119,7 +112,7 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
           required
         />
       </div>
-      <div>
+      {/* <div>
         <Label>Category</Label>
         <select
           className="w-full border rounded px-3 py-2"
@@ -133,7 +126,14 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
+
+      <CreatableMultiSelect
+        label="Categories"
+        options={categories} // array of { id, name }
+        selected={selectedCategories} // string[]
+        setSelected={setSelectedCategories}
+      />
       {/* <div>
         <Label>Tags (hold Ctrl or Cmd to select multiple)</Label>
         <select
@@ -150,7 +150,7 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
         </select>
       </div> */}
 
-      <div>
+      {/* <div>
         <Label>Tags</Label>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -195,7 +195,14 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
             </Command>
           </PopoverContent>
         </Popover>
-      </div>
+      </div> */}
+
+      <CreatableMultiSelect
+        label="Tags"
+        options={tags} // array of { id, name }
+        selected={selectedTags} // string[]
+        setSelected={setSelectedTags}
+      />
       <div>
         <Label>Content (Markdown)</Label>
         <Textarea

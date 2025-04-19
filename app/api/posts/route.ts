@@ -5,7 +5,7 @@ import { slugify } from "@/lib/utils";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, content, category, description, tags } = body;
+    const { title, content, category, description, tags, categories } = body;
 
     if (!title || !content) {
       return NextResponse.json(
@@ -37,7 +37,10 @@ export async function POST(req: Request) {
           })),
         },
         categories: {
-          connect: [{ id: category }],
+          connectOrCreate: categories.map((cat: string) => ({
+            where: { name: cat },
+            create: { name: cat },
+          })),
         },
       },
     });

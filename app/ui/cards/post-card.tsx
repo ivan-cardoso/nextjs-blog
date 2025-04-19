@@ -36,7 +36,7 @@ export function PostCard({ post }: { post: AdminPost }) {
           );
         })}
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-x-1">
         {post.tags.map((tag) => {
           return (
             <Badge key={tag.id} variant={"secondary"}>
