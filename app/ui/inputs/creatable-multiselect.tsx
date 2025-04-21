@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { X, Check } from "lucide-react";
 
 type Option = { id?: string; name: string };
 
@@ -105,7 +105,9 @@ export function CreatableMultiSelect({
                 >
                   <span>{option.name}</span>
                   {selected.includes(option.name) && (
-                    <span className="ml-auto text-muted-foreground">✓</span>
+                    <span className="ml-auto text-muted-foreground">
+                      <Check />
+                    </span>
                   )}
                 </CommandItem>
               ))}

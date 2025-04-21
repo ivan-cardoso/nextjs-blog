@@ -6,7 +6,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
 
   try {
     const body = await req.json();
-    const { title, content, description, slug, published, tags, category } =
+    const { title, content, description, slug, published, tags, categories } =
       body;
 
     const dataToUpdate: any = {
@@ -27,10 +27,13 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
       };
     }
 
-    if (typeof category === "string") {
+    if (Array.isArray(categories)) {
       dataToUpdate.categories = {
         set: [],
-        connect: [{ id: category }],
+        connectOrCreate: categories.map((category: string) => ({
+          where: { name: category },
+          create: { name: category },
+        })),
       };
     }
 

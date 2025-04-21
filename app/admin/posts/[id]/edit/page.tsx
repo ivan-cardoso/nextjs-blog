@@ -24,7 +24,7 @@ export default async function EditPostPage(context: {
           title: post.title,
           description: post.description,
           content: post.content as string,
-          category: post.categories[0],
+          category: post.categories,
           tags: post.tags,
         }}
         categories={categories}

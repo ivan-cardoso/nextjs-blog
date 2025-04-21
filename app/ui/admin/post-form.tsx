@@ -16,7 +16,7 @@ type PostFormProps = {
     title: string;
     description: string;
     content: string;
-    category: { id: string; name: string };
+    category: { id: string; name: string }[];
     tags: { id: string; name: string }[];
   };
   categories: { id: string; name: string }[];
@@ -32,26 +32,12 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
   );
   const [content, setContent] = useState(initialData?.content || "");
 
-  // Category is stored as just the ID (string)
-
-  const [category, setCategory] = useState(initialData?.category?.id || "");
-
-  // Tags are stored as an array of strings (tag names)
-  /* const [selectedTags, setSelectedTags] = useState<string[]>(
-    initialData?.tags?.map((tag) => tag.name) || []
-  ); */
-
-  // Inside your PostForm component
-  /* const [selectedTags, setSelectedTags] = useState<string[]>(
-    initialData?.tags?.map((tag) => tag.name) || []
-  ); */
   const [selectedTags, setSelectedTags] = useState<string[]>(
-    initialData?.tags || []
+    initialData?.tags?.map((tag) => tag.name) || []
   );
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    initialData?.category ? [initialData.category.name] : []
+    initialData?.category?.map((cat) => cat.name) || []
   );
-  const [open, setOpen] = useState(false);
 
   const isEdit = Boolean(initialData);
 
@@ -112,21 +98,6 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
           required
         />
       </div>
-      {/* <div>
-        <Label>Category</Label>
-        <select
-          className="w-full border rounded px-3 py-2"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">Select a category</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
-      </div> */}
 
       <CreatableMultiSelect
         label="Categories"
@@ -134,68 +105,6 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
         selected={selectedCategories} // string[]
         setSelected={setSelectedCategories}
       />
-      {/* <div>
-        <Label>Tags (hold Ctrl or Cmd to select multiple)</Label>
-        <select
-          multiple
-          value={selectedTags}
-          onChange={handleTagChange}
-          className="w-full border rounded px-3 py-2 h-32"
-        >
-          {tags.map((tag) => (
-            <option key={tag.id} value={tag.name}>
-              {tag.name}
-            </option>
-          ))}
-        </select>
-      </div> */}
-
-      {/* <div>
-        <Label>Tags</Label>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              className="w-full justify-between"
-            >
-              {selectedTags.length > 0
-                ? `${selectedTags.length} tag${
-                    selectedTags.length > 1 ? "s" : ""
-                  } selected`
-                : "Select tags"}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
-            <Command>
-              <CommandInput placeholder="Search tags..." />
-              <CommandList>
-                <CommandEmpty>No tags found.</CommandEmpty>
-                <CommandGroup>
-                  {tags.map((tag) => {
-                    const isSelected = selectedTags.includes(tag.name);
-                    return (
-                      <CommandItem
-                        key={tag.id}
-                        onSelect={() => {
-                          setSelectedTags((prev) =>
-                            isSelected
-                              ? prev.filter((t) => t !== tag.name)
-                              : [...prev, tag.name]
-                          );
-                        }}
-                      >
-                        <Checkbox checked={isSelected} className="mr-2" />
-                        {tag.name}
-                      </CommandItem>
-                    );
-                  })}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-      </div> */}
 
       <CreatableMultiSelect
         label="Tags"
