@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CreatableMultiSelect } from "../inputs/creatable-multiselect";
 import { DeleteButton } from "./delete-button";
+import { toast } from "sonner";
 
 import ReactMarkdown from "react-markdown";
 
@@ -63,22 +64,14 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
     );
 
     if (res.ok) {
+      toast.success(
+        isEdit ? "Event has been updated." : "Event has been created."
+      );
       router.push("/admin/posts");
       router.refresh();
+    } else {
+      toast.error(isEdit ? "Failed to update post" : "Failed to create post");
     }
-  };
-
-  const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const options = e.target.options;
-    const selected: string[] = [];
-
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].selected) {
-        selected.push(options[i].value);
-      }
-    }
-
-    setSelectedTags(selected);
   };
 
   return (

@@ -9,17 +9,6 @@ import { DeleteButton } from "../admin/delete-button";
 export function PostCard({ post }: { post: AdminPost }) {
   const router = useRouter();
 
-  const handleDelete = async (id: string) => {
-    const res = await fetch(`/api/posts/${id}/delete`, {
-      method: "DELETE",
-    });
-
-    if (res.ok) {
-      router.refresh();
-    } else {
-      console.error("Failed to delete post");
-    }
-  };
   return (
     <div className="rounded-md border bg-background p-4 shadow-sm hover:shadow transition flex flex-col gap-y-2">
       <div className="flex items-center justify-between">

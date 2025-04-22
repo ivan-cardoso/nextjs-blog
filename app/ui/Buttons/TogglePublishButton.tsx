@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function TogglePublishButton({
   postId,
@@ -15,9 +16,16 @@ export default function TogglePublishButton({
   const [isPending, startTransition] = useTransition();
 
   const togglePublish = async () => {
-    await fetch(`/api/posts/${postId}/toggle`, {
+    const res = await fetch(`/api/posts/${postId}/toggle`, {
       method: "POST",
     });
+
+    if (res.ok) {
+      toast.success("Post has been published");
+      router.refresh();
+    } else {
+      toast.error("Error publishing post");
+    }
 
     startTransition(() => {
       router.refresh(); // Refresh data after mutation

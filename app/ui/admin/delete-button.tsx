@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -32,18 +30,11 @@ export function DeleteButton({ postId }: DeleteButtonProps) {
       method: "DELETE",
     });
     if (res.ok) {
-      /*  alert({
-        title: "Post deleted",
-        description: "The post was deleted successfully.",
-      }); */
+      toast.success("The post was deleted successfully.");
       router.push("/admin/posts");
       router.refresh();
     } else {
-      alert({
-        title: "Error deleting post",
-        description: "Something went wrong while deleting the post.",
-        variant: "destructive",
-      });
+      toast.error("Error deleting post");
     }
   };
 
