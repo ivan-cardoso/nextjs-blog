@@ -4,6 +4,7 @@ import Link from "next/link";
 import TogglePublishButton from "../Buttons/TogglePublishButton";
 import { AdminPost } from "@/lib/definitions";
 import { useRouter } from "next/navigation";
+import { DeleteButton } from "../admin/delete-button";
 
 export function PostCard({ post }: { post: AdminPost }) {
   const router = useRouter();
@@ -58,14 +59,7 @@ export function PostCard({ post }: { post: AdminPost }) {
           <TogglePublishButton postId={post.id} published={post.published} />
         </span>
 
-        <Button
-          size="sm"
-          variant="default"
-          onClick={() => handleDelete(post.id)}
-          className="bg-red-500 text-white hover:underline"
-        >
-          Delete
-        </Button>
+        <DeleteButton postId={post.id} />
       </div>
     </div>
   );

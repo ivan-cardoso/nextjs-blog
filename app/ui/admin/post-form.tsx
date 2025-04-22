@@ -6,9 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import ReactMarkdown from "react-markdown";
-
 import { CreatableMultiSelect } from "../inputs/creatable-multiselect";
+import { DeleteButton } from "./delete-button";
+
+import ReactMarkdown from "react-markdown";
 
 type PostFormProps = {
   initialData?: {
@@ -127,8 +128,11 @@ export function PostForm({ initialData, categories, tags }: PostFormProps) {
           <ReactMarkdown>{content}</ReactMarkdown>
         </div>
       </div>
+      <div className="space-x-3">
+        <Button type="submit">{isEdit ? "Update Post" : "Create Post"}</Button>
 
-      <Button type="submit">{isEdit ? "Update Post" : "Create Post"}</Button>
+        {initialData && <DeleteButton postId={initialData?.id} />}
+      </div>
     </form>
   );
 }
