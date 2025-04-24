@@ -28,7 +28,7 @@ model Post {
   title       String
   description String
   slug        String   @unique
-  content     Json     // rich text format
+  content     String     
   published   Boolean  @default(false)
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
