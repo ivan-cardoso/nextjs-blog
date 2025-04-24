@@ -22,7 +22,6 @@ export default function TogglePublishButton({
 
     if (res.ok) {
       toast.success("Post has been published");
-      router.refresh();
     } else {
       toast.error("Error publishing post");
     }
