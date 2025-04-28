@@ -32,7 +32,10 @@ export default async function PostPage({
         <p className="italic">
           Filed under{" "}
           {post.categories.map((cat) => (
-            <span className="font-bold not-italic"> {cat.name} </span>
+            <span key={cat.id} className="font-bold not-italic">
+              {" "}
+              {cat.name}{" "}
+            </span>
           ))}
           on{" "}
           <span className="font-bold not-italic">

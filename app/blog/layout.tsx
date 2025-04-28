@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { Navbar } from "../ui/navbar/navbar";
+import { Footer } from "../ui/footer/footer";
 
 export default function BlogLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <header className="border-b py-4 px-6">
+    <>
+      {/* <header className="border-b py-4 px-6">
         <nav className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/blog" className="font-bold text-lg hover:underline">
             My Blog
@@ -16,8 +18,10 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
             Back to Admin
           </Link>
         </nav>
-      </header>
+      </header> */}
+      <Navbar />
       <main className="max-w-3xl mx-auto">{children}</main>
-    </div>
+      <Footer />
+    </>
   );
 }
