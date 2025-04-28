@@ -1,0 +1,27 @@
+
+.prose :where(pre) {
+  background-color: oklch(0.26 0.07 280);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  color: white;
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.dark .prose pre {
+    background-color: oklch(0.2 0 0); 
+    color: white;
+  }
+
+/* Optional custom tweaks for prose */
+.prose h1, .prose h2, .prose h3 {
+  scroll-margin-top: 6rem;
+  font-weight: 600;
+}
+.prose h1 {
+  font-size: 2rem;
+}
+
+.prose h2 { 
+    color: blueviolet;
+}

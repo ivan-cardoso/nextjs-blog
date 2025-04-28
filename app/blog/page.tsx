@@ -1,6 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
-import { format } from "date-fns";
 import { BlogPostCard } from "../ui/cards/blog-post-card";
 
 export default async function BlogPage() {

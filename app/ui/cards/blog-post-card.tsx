@@ -18,24 +18,6 @@ export function BlogPostCard({ post }: { post: AdminPost }) {
         {post.description}
       </p>
       <p className="text-sm text-muted-foreground mt-2">{formattedDate}</p>
-      {/* <div className="flex items-center justify-between">
-        {post.categories.map((cat) => {
-          return (
-            <Badge key={cat.id} variant={"default"}>
-              {cat.name}
-            </Badge>
-          );
-        })}
-      </div>
-      <div className="flex items-center gap-x-1">
-        {post.tags.map((tag) => {
-          return (
-            <Badge key={tag.id} variant={"secondary"}>
-              {tag.name}
-            </Badge>
-          );
-        })}
-      </div> */}
     </Link>
   );
 }
