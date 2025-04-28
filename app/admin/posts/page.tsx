@@ -22,8 +22,8 @@ export default async function AdminPostList() {
     published: post.published,
     categories: post.categories,
     tags: post.tags,
-    createdAt: post.createdAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString(),
+    createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
   }));
 
   return (

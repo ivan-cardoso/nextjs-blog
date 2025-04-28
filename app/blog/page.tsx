@@ -1,7 +1,7 @@
-// app/blog/page.tsx
-
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { format } from "date-fns";
+import { BlogPostCard } from "../ui/cards/blog-post-card";
 
 export default async function BlogPage() {
   const posts = await prisma.post.findMany({
@@ -22,32 +22,9 @@ export default async function BlogPage() {
       )}
 
       <ul className="space-y-6">
-        {posts.map((post) => (
-          <li key={post.id} className="border-b pb-4">
-            <Link href={`/blog/${post.slug}`}>
-              <h2 className="text-xl font-semibold hover:underline">
-                {post.title}
-              </h2>
-            </Link>
-            <p className="text-muted-foreground text-sm">{post.description}</p>
-
-            <div className="flex flex-wrap mt-2 text-xs text-muted-foreground">
-              {post.categories &&
-                post.categories.map((category) => {
-                  return (
-                    <span key={category.id} className="mr-2 italic">
-                      #{category.name}
-                    </span>
-                  );
-                })}
-              {post.tags.map((tag) => (
-                <span key={tag.id} className="mr-2">
-                  #{tag.name}
-                </span>
-              ))}
-            </div>
-          </li>
-        ))}
+        {posts.map((post) => {
+          return <BlogPostCard post={post} key={post.id} />;
+        })}
       </ul>
     </div>
   );
