@@ -3,7 +3,17 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Search, Github, Moon, Sun } from "lucide-react"; // Added more icons
+import {
+  Menu,
+  Search,
+  Github,
+  Moon,
+  Sun,
+  X,
+  Sparkles,
+  LayoutGrid,
+  User,
+} from "lucide-react"; // Added more icons
 
 import { cn, slugify } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,7 +35,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"; // Import Accordion components
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Category } from "@/lib/generated/prisma";
+import { manrope } from "../fonts";
 
 // Example data for dropdown items
 const components: { title: string; href: string; description: string }[] = [
@@ -54,17 +72,17 @@ interface NavbarProps {
 }
 
 export function Navbar({ categories }: NavbarProps) {
-  // Basic theme toggle state example (you'd likely use a proper theme provider)
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
-    // <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-background/95  backdrop-blur supports-[backdrop-filter]:bg-background/60">
-    <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-red-400 ">
-      <div className="container flex h-14 md:h-24 2xl:h-28 max-w-screen-2xl items-center px-4 md:px-28 lg:px-36">
-        {/* 1) Logo */}
+    <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-background/95  backdrop-blur supports-[backdrop-filter]:bg-background/98">
+      {/* <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-red-400 "> */}
+      <div
+        className={`${manrope.className} container flex h-16 md:h-24 2xl:h-28 max-w-screen-2xl items-center px-4 md:px-28 lg:px-36`}
+      >
         <Link
-          href="/blog" // Changed href to /blog as per your original code
+          href="/blog"
           className="mr-6 flex items-center space-x-2 text-lg md:text-xl font-bold tracking-tight" // Adjusted text size
         >
           {/* Optional: Add an actual SVG logo here */}
@@ -72,22 +90,16 @@ export function Navbar({ categories }: NavbarProps) {
           <span>Ivan Cardoso</span>
         </Link>
 
-        {/* 2) Desktop Navigation (Middle Left) */}
+        {/* Desktop */}
         <div className="hidden md:flex flex-1">
           {" "}
-          {/* Use flex-1 to push icons right */}
           <NavigationMenu>
             <NavigationMenuList>
-              {/* Simple Link Item */}
-
-              {/* Item with Dropdown */}
-
-              {/* Another example dropdown or simple link */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
-                    navigationMenuTriggerStyle(), // Use this style for consistency
-                    "text-muted-foreground hover:text-foreground"
+                    // navigationMenuTriggerStyle(), // Use this style for consistency
+                    "text-primary-text hover:text-foreground text-md"
                   )}
                 >
                   Categories
@@ -111,8 +123,8 @@ export function Navbar({ categories }: NavbarProps) {
                 <Link href="/about" legacyBehavior passHref>
                   <NavigationMenuLink
                     className={cn(
-                      navigationMenuTriggerStyle(), // Use this style for consistency
-                      "text-muted-foreground hover:text-foreground"
+                      // navigationMenuTriggerStyle(), // Use this style for consistency
+                      "text-primary-text hover:text-foreground text-md"
                     )}
                   >
                     About
@@ -123,10 +135,8 @@ export function Navbar({ categories }: NavbarProps) {
           </NavigationMenu>
         </div>
 
-        {/* 3) Icons (Right) */}
         <div className="hidden md:flex items-center space-x-2 ml-auto">
           {" "}
-          {/* ml-auto pushes this section right */}
           <Button variant="ghost" size="icon" aria-label="Search">
             <Search className="h-5 w-5" />
           </Button>
@@ -157,70 +167,109 @@ export function Navbar({ categories }: NavbarProps) {
             )}
           </Button>
         </div>
+        {/* Desktop END */}
 
         {/* Mobile Navigation Trigger */}
-        <div className="md:hidden ml-auto">
-          {" "}
-          {/* Ensure trigger is on the right on mobile */}
+        <div
+          className={`flex flex-1 items-center justify-end md:hidden ${manrope.variable}`}
+        >
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="mr-2">
+                <Menu className="h-6 w-6" />
                 <span className="sr-only">Open main menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
-              {" "}
-              {/* Change side if needed */}
-              <SheetHeader className="border-b pb-4 mb-4">
-                {/* Mobile Logo/Title */}
+
+            <SheetContent
+              side="left"
+              className={cn(
+                "w-full max-w-sm p-0 font-sans",
+                "[&>button[class*='rounded-xs']]:hidden"
+              )}
+            >
+              <SheetClose asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-3 right-3 z-10 text-muted-foreground hover:bg-accent rounded-full"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </SheetClose>
+
+              <SheetHeader className="border-b p-4">
                 <SheetTitle>
-                  <Link href="/blog" className="font-bold">
-                    Ivan Cardoso
-                  </Link>
+                  <SheetClose asChild>
+                    <Link
+                      href="/blog"
+                      className="font-bold text-lg flex items-center gap-2"
+                    >
+                      Blog
+                    </Link>
+                  </SheetClose>
                 </SheetTitle>
-                {/* Optional: Add description if needed */}
-                {/* <SheetDescription>
-                  Navigate the site
-                </SheetDescription> */}
               </SheetHeader>
-              <div className="grid gap-2 py-2">
-                {" "}
-                {/* Use grid for simple vertical links */}
-                {/* Add SheetClose around links to close sheet on navigation */}
-                <SheetClose asChild>
-                  <Link
-                    href="/blog"
-                    className="flex w-full items-center rounded-md p-2 text-sm font-medium hover:bg-accent"
-                  >
-                    Home
-                  </Link>
-                </SheetClose>
-                <SheetClose asChild>
-                  <Link
-                    href="/about"
-                    className="flex w-full items-center rounded-md p-2 text-sm font-medium hover:bg-accent"
-                  >
-                    About
-                  </Link>
-                </SheetClose>
-                {/* Add other primary links here */}
-                <SheetClose asChild>
-                  <Link
-                    href="/docs/primitives/overview" // Example link
-                    className="flex w-full items-center rounded-md p-2 text-sm font-medium hover:bg-accent"
-                  >
-                    Components Overview
-                  </Link>
-                </SheetClose>
-              </div>
-              {/* Optional: Add mobile icons maybe in footer */}
-              <div className="absolute bottom-4 left-4 right-4 flex justify-center space-x-2">
+
+              <ScrollArea className="h-[calc(100vh-140px)] px-4 py-4">
+                <nav className="flex flex-col space-y-1">
+                  <SheetClose asChild>
+                    <Link
+                      href="/blog"
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <Sparkles className="h-5 w-5 text-muted-foreground" />
+                      <span>Latest</span>
+                    </Link>
+                  </SheetClose>
+
+                  {categories && categories.length > 0 && (
+                    <Accordion type="single" collapsible className="w-full">
+                      <AccordionItem value="categories" className="border-b-0">
+                        <AccordionTrigger className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground hover:no-underline data-[state=open]:bg-accent">
+                          <div className="flex items-center gap-3">
+                            <LayoutGrid className="h-5 w-5 text-muted-foreground" />
+                            <span>Categories</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pl-8 pr-2 pt-1 pb-0">
+                          <div className="flex flex-col space-y-1">
+                            {categories.map((cat) => (
+                              <SheetClose asChild key={cat.id}>
+                                <Link
+                                  href={`/blog/${slugify(cat.name)}`}
+                                  className="block rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+                                >
+                                  {cat.name}
+                                </Link>
+                              </SheetClose>
+                            ))}
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  )}
+
+                  <SheetClose asChild>
+                    <Link
+                      href="/about"
+                      className="flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                    >
+                      <User className="h-5 w-5 text-muted-foreground" />
+                      <span>About</span>
+                    </Link>
+                  </SheetClose>
+                </nav>
+              </ScrollArea>
+
+              {/* Footer Icons */}
+              <div className="absolute bottom-0 left-0 right-0 border-t p-4 flex justify-center space-x-3 bg-background">
                 <Button
                   variant="ghost"
                   size="icon"
                   aria-label="Search"
-                  className="text-muted-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   <Search className="h-5 w-5" />
                 </Button>
@@ -229,22 +278,22 @@ export function Navbar({ categories }: NavbarProps) {
                   size="icon"
                   aria-label="GitHub"
                   asChild
-                  className="text-muted-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <a
-                    href="https://github.com/your-repo"
+                  <Link
+                    href="https://github.com/your-github"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                   >
                     <Github className="h-5 w-5" />
-                  </a>
+                  </Link>
                 </Button>
                 <Button
                   variant="ghost"
                   size="icon"
                   aria-label="Toggle Theme"
                   onClick={toggleTheme}
-                  className="text-muted-foreground"
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   {isDarkMode ? (
                     <Sun className="h-5 w-5" />
