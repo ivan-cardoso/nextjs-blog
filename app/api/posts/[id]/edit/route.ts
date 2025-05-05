@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { slugify } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function PUT(req: Request, context: { params: { id: string } }) {
@@ -13,7 +14,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
       title,
       content,
       description,
-      slug,
+      slug: slugify(title),
       published,
     };
 

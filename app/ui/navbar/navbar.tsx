@@ -76,14 +76,14 @@ export function Navbar({ categories }: NavbarProps) {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-background/95  backdrop-blur supports-[backdrop-filter]:bg-background/98">
+    <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-secondary">
       {/* <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-red-400 "> */}
       <div
         className={`${manrope.className} container flex h-16 md:h-24 2xl:h-28 max-w-screen-2xl items-center px-4 md:px-28 lg:px-36`}
       >
         <Link
           href="/blog"
-          className="mr-6 flex items-center space-x-2 text-lg md:text-xl font-bold tracking-tight" // Adjusted text size
+          className="mr-6 flex items-center space-x-2 text-lg md:text-xl font-bold tracking-tight font-sans uppercase" // Adjusted text size
         >
           {/* Optional: Add an actual SVG logo here */}
           {/* <YourLogoSvg className="h-6 w-6" /> */}
@@ -110,7 +110,7 @@ export function Navbar({ categories }: NavbarProps) {
                       <ListItem
                         key={cat.id}
                         title={cat.name}
-                        href={`/${slugify(cat.name)}`}
+                        href={`/blog/${slugify(cat.name)}`}
                       >
                         {cat.name}
                       </ListItem>

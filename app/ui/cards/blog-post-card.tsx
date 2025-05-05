@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AdminPost } from "@/lib/definitions";
 import { format } from "date-fns";
+import { slugify } from "@/lib/utils";
 
 export function BlogPostCard({ post }: { post: AdminPost }) {
   const formattedDate = format(new Date(post.createdAt), "MMMM d, yyyy");
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/blog/${slugify(post.categories[0].name)}/${post.slug}`}
       className="rounded-md border bg-background p-4 shadow-sm hover:shadow transition flex flex-col gap-y-2"
     >
       <div className="flex items-center justify-between">

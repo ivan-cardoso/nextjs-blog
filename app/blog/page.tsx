@@ -12,8 +12,10 @@ export default async function BlogPage() {
   });
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4 bg-red-300">
-      <h1 className="text-3xl font-bold mb-6">Latest Posts</h1>
+    <div className="max-w-3xl mx-auto py-10 px-4 ">
+      <h1 className="text-5xl font-bold mb-6 text-primary uppercase font-sans">
+        Latest Posts
+      </h1>
 
       {posts.length === 0 && (
         <p className="text-muted-foreground">No posts published yet.</p>
