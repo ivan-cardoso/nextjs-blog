@@ -6,6 +6,7 @@ import { formattedDate, slugify } from "@/lib/utils";
 import "@/app/ui/mdx.css";
 import { manrope } from "@/app/ui/fonts";
 import Link from "next/link";
+import { Title } from "@/app/ui/title/title";
 
 export default async function PostPage({
   params,
@@ -24,17 +25,7 @@ export default async function PostPage({
 
   return (
     <article className={`${manrope.variable} w-full font-sans p-4 md:p-8 `}>
-      <div className="border-b w-full">
-        <h1
-          className=" 
-        font-semibold mb-4 uppercase max-w-72  text-4xl font-geist
-        sm:text-5xl sm:max-w-90 md:mb-8
-        md:max-w-2xl md:text-6xl
-        "
-        >
-          {post.title}
-        </h1>
-      </div>
+      <Title text={post.title} />
       <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16 py-4 md:py-8">
         <aside className="md:w-60 lg:w-42 flex-shrink-0 space-y-4 h-fit">
           {post.categories && post.categories.length > 0 && (
