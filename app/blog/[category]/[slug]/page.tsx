@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { formattedDate, slugify } from "@/lib/utils";
 import "@/app/ui/mdx.css";
-import { manrope, geistSans } from "@/app/ui/fonts";
+import { manrope } from "@/app/ui/fonts";
 import Link from "next/link";
 
 export default async function PostPage({
@@ -23,13 +23,19 @@ export default async function PostPage({
   }
 
   return (
-    <article className={`${manrope.variable} w-full font-sans  p-8 `}>
+    <article className={`${manrope.variable} w-full font-sans p-4 md:p-8 `}>
       <div className="border-b w-full">
-        <h1 className=" font-semibold mb-8 uppercase max-w-2xl text-6xl font-geist">
+        <h1
+          className=" 
+        font-semibold mb-4 uppercase max-w-72  text-4xl font-geist
+        sm:text-5xl sm:max-w-90 md:mb-8
+        md:max-w-2xl md:text-6xl
+        "
+        >
           {post.title}
         </h1>
       </div>
-      <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16 py-8">
+      <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16 py-4 md:py-8">
         <aside className="md:w-60 lg:w-42 flex-shrink-0 space-y-4 h-fit">
           {post.categories && post.categories.length > 0 && (
             <div>
@@ -39,7 +45,7 @@ export default async function PostPage({
               <div className="space-y-1">
                 {post.categories.map((cat: any) => (
                   <Link
-                    href={`/blog/${slugify(cat.name)}`} // Ensure your slugify and routing match
+                    href={`/blog/${slugify(cat.name)}`}
                     key={cat.id}
                     className="block text-sm text-sky-600 dark:text-sky-400 hover:underline leading-snug"
                   >
@@ -50,7 +56,6 @@ export default async function PostPage({
             </div>
           )}
 
-          {/* Published Date Section */}
           <div>
             <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
               Published
@@ -60,7 +65,6 @@ export default async function PostPage({
             </p>
           </div>
 
-          {/* Updated Date Section (Conditional) */}
           {formattedDate(post.createdAt) !== formattedDate(post.updatedAt) && (
             <div>
               <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
@@ -77,9 +81,8 @@ export default async function PostPage({
           <p className={`text-primary mb-4 `}>{post.description}</p>
           <MDXRemote source={post.content} />
         </main>
-        <aside className="md:w-30 lg:w-42 flex-shrink-0 space-y-6 md:sticky md:top-24 h-fit">
-          {/* Updated Date Section (Conditional) */}
-        </aside>
+        {/* <aside className="md:w-30 lg:w-42 flex-shrink-0 space-y-6 md:sticky md:top-24 h-fit">
+        </aside> */}
       </div>
     </article>
   );
