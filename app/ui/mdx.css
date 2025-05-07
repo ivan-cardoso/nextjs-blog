@@ -11,17 +11,18 @@
 .dark .prose pre {
     background-color: oklch(0.2 0 0); 
     color: white;
+    color: var(--color-dark);
   }
 
 /* Optional custom tweaks for prose */
-.prose h1, .prose h2, .prose h3 {
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
   scroll-margin-top: 6rem;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: var(--font-geist-sans);
+  color: var(--color-dark);
 }
 .prose h1 {
   font-size: 2rem;
 }
 
-.prose h2 { 
-    color: blueviolet;
-}
+

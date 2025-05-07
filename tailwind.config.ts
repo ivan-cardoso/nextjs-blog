@@ -21,6 +21,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-manrope)", "sans-serif"],
+        geist: ["var(--font-geist-sans)", "sans-serif"],
       },
     },
     keyframes: {

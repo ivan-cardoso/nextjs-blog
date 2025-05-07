@@ -10,7 +10,7 @@ export function BlogPostCard({ post }: { post: AdminPost }) {
   return (
     <Link
       href={`/blog/${slugify(post.categories[0].name)}/${post.slug}`}
-      className="rounded-md border bg-background p-4 shadow-sm hover:shadow transition flex flex-col gap-y-2"
+      className="rounded-md border bg-secondary p-4 shadow-sm hover:shadow transition flex flex-col gap-y-2"
     >
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">{post.title}</h3>

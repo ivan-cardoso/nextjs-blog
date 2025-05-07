@@ -12,7 +12,7 @@ export default async function BlogPage() {
   });
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4 ">
+    <div className="py-10 px-4 ">
       <h1 className="text-5xl font-bold mb-6 text-primary uppercase font-sans">
         Latest Posts
       </h1>

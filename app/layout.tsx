@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/ui/globals.css";
 import { Providers } from "./ui/Providers";
 import { Toaster } from "@/components/ui/sonner";
-import { Navbar } from "@/app/ui/navbar/navbar";
-import { Footer } from "@/app/ui/footer/footer";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { geistMono, geistSans } from "./ui/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",

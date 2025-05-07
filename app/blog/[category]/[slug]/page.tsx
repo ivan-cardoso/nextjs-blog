@@ -2,9 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { formattedDate } from "@/lib/utils";
+import { formattedDate, slugify } from "@/lib/utils";
 import "@/app/ui/mdx.css";
-import { manrope } from "@/app/ui/fonts";
+import { manrope, geistSans } from "@/app/ui/fonts";
+import Link from "next/link";
 
 export default async function PostPage({
   params,
@@ -22,40 +23,63 @@ export default async function PostPage({
   }
 
   return (
-    <article
-      className={`${manrope.variable} font-sans max-w-3xl mx-auto py-16 px-4 prose prose-lg prose-neutral dark:prose-invert`}
-    >
-      <h1 className="text-4xl font-semibold mb-4">{post.title}</h1>
-      <p className="text-muted-foreground mb-4">{post.description}</p>
-
-      <div className="mt-6 prose prose-lg  prose-neutral dark:prose-invert">
-        <p className="italic">
-          Filed under{" "}
-          {post.categories.map((cat) => (
-            <span key={cat.id} className="font-bold not-italic">
-              {" "}
-              {cat.name}{" "}
-            </span>
-          ))}
-          on{" "}
-          <span className="font-bold not-italic">
-            {formattedDate(post.createdAt)}
-            {". "}
-          </span>
-        </p>
-        {formattedDate(post.createdAt) !== formattedDate(post.updatedAt) && (
-          <p>
-            Last updated on{" "}
-            <span className="font-bold not-italic">
-              {formattedDate(post.updatedAt)}
-            </span>
-          </p>
-        )}
-
-        {/* <p>Tags: {post.tags.map((tag) => `#${tag.name}`).join(", ")}</p> */}
+    <article className={`${manrope.variable} w-full font-sans  p-8 `}>
+      <div className="border-b w-full">
+        <h1 className=" font-semibold mb-8 uppercase max-w-2xl text-6xl font-geist">
+          {post.title}
+        </h1>
       </div>
-      <div className={`${manrope.variable} font-sans max-w-3xl mx-auto `}>
-        <MDXRemote source={post.content} />
+      <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16 py-8">
+        <aside className="md:w-60 lg:w-42 flex-shrink-0 space-y-4 h-fit">
+          {post.categories && post.categories.length > 0 && (
+            <div>
+              <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
+                Filed Under
+              </h3>
+              <div className="space-y-1">
+                {post.categories.map((cat: any) => (
+                  <Link
+                    href={`/blog/${slugify(cat.name)}`} // Ensure your slugify and routing match
+                    key={cat.id}
+                    className="block text-sm text-sky-600 dark:text-sky-400 hover:underline leading-snug"
+                  >
+                    {cat.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Published Date Section */}
+          <div>
+            <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
+              Published
+            </h3>
+            <p className="text-sm text-foreground/80">
+              {formattedDate(post.createdAt)}
+            </p>
+          </div>
+
+          {/* Updated Date Section (Conditional) */}
+          {formattedDate(post.createdAt) !== formattedDate(post.updatedAt) && (
+            <div>
+              <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
+                Last Updated
+              </h3>
+              <p className="text-sm text-foreground/80">
+                {formattedDate(post.updatedAt)}
+              </p>
+            </div>
+          )}
+        </aside>
+
+        <main className="flex-1 min-w-0 prose prose-lg prose-neutral dark:prose-invert font-sans">
+          <p className={`text-primary mb-4 `}>{post.description}</p>
+          <MDXRemote source={post.content} />
+        </main>
+        <aside className="md:w-30 lg:w-42 flex-shrink-0 space-y-6 md:sticky md:top-24 h-fit">
+          {/* Updated Date Section (Conditional) */}
+        </aside>
       </div>
     </article>
   );

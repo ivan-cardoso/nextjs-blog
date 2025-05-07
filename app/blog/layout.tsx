@@ -15,9 +15,7 @@ export default async function BlogLayout({
   return (
     <>
       <Navbar categories={categories} />
-      <main className={`${manrope.className} max-w-3xl mx-auto`}>
-        {children}
-      </main>
+      <main className={`${manrope.className} w-full `}>{children}</main>
       <Footer />
     </>
   );
