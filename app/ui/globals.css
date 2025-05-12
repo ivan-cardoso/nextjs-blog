@@ -29,6 +29,7 @@
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-highlight: var(--highlight);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -47,7 +48,11 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #e7e7e2;
+  /* --background: #e7e7e2; */
+  
+  /* 2nd Option Ivantosh */
+  --background: #fce5dd; 
+    
   /* --secondary-background: #f4efe4; */
   --secondary-background: #393632;
   --bordercolor : #393632;
@@ -65,6 +70,8 @@
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
+  /* --highlight: #c01988; */
+  --highlight: #00a3a8;
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: #393632;

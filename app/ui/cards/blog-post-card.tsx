@@ -9,14 +9,14 @@ import { slugify } from "@/lib/utils";
 export function BlogPostCard({ post }: { post: AdminPost }) {
   const formattedDate = format(new Date(post.createdAt), "MMMM d, yyyy");
   return (
-    <Link
-      href={`/blog/${slugify(post.categories[0].name)}/${post.slug}`}
-      className=" border-b p-4 transition grid grid-cols-6  gap-x-12 min-h-60"
-    >
+    <div className=" border-b p-4 transition grid grid-cols-6  gap-x-12 min-h-60 pt-8">
       <div className="flex flex-col">
-        <p className="text-sm uppercase font-semibold text-primary tracking-wider mb-1">
+        <Link
+          href={`/blog/${slugify(post.categories[0].name)}`}
+          className="text-sm uppercase font-semibold text-highlight tracking-wider mb-1"
+        >
           {post.categories[0].name}
-        </p>
+        </Link>
         <p className="text-sm text-foreground/80 tracking-wider mb-1">
           {formattedDate}
         </p>
@@ -24,18 +24,30 @@ export function BlogPostCard({ post }: { post: AdminPost }) {
       {/* <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
         Filed Under
       </h3> */}
-      <div className="  justify-between col-span-2">
-        <h3 className="text-4xl font-semibold uppercase ">{post.title}</h3>
+      <div className="justify-between col-span-2">
+        <Link
+          href={`/blog/${slugify(post.categories[0].name)}/${post.slug}`}
+          className="text-4xl font-semibold uppercase hover:text-highlight"
+        >
+          {post.title}
+        </Link>
       </div>
-      <p className="text-md text-foreground col-span-2 line-clamp-3 leading-normal line-clamp-3">
-        {post.description}
-      </p>
+      <div className="col-span-2">
+        <p className="text-md text-foreground line-clamp-6 ">
+          {post.description}
+        </p>
+      </div>
 
-      <div className="text-sm uppercase font-semibold tracking-wider mb-1  col-span-1  flex items-center hover:underline">
-        Read Post
-        <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+      <div className="col-span-1 ">
+        <Link
+          className="hover:text-highlight flex"
+          href={`/blog/${slugify(post.categories[0].name)}/${post.slug}`}
+        >
+          <p className="text-sm uppercase font-semibold">Read Post</p>
+          <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 " />
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }
 
