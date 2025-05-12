@@ -76,11 +76,11 @@ export function Navbar({ categories }: NavbarProps) {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
-    <header className=" z-50 w-full  bg-background px-10">
+    <header className=" z-50 w-full  bg-background  px-0 md:px-10">
       {/* px-4 md:px-28 lg:px-36 */}
       {/* <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-red-400 "> */}
       <div
-        className={`${manrope.className} border-b container flex h-16 md:h-24 2xl:h-28 max-w-screen-2xl items-center `}
+        className={`${manrope.className} border-b  container px-6 md:px-0 flex h-16 md:h-24 2xl:h-28 max-w-screen-2xl items-center `}
       >
         <Link
           href="/blog"
