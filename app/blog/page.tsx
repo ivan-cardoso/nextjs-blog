@@ -13,7 +13,7 @@ export default async function BlogPage() {
   });
 
   return (
-    <div className="py-10 px-10">
+    <div className="py-10 px-0 md:px-10">
       {/* <h1 className="text-5xl font-bold mb-6 text-primary uppercase font-sans">
         Latest Posts
       </h1> */}
