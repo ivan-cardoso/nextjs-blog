@@ -11,7 +11,7 @@ interface CategoryPageProps {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { category: categorySlug } = params;
+  const { category: categorySlug } = await params;
 
   const categories = await prisma.category.findMany();
 

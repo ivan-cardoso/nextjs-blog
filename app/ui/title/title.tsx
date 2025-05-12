@@ -1,10 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { AdminPost } from "@/lib/definitions";
-import { format } from "date-fns";
-import { slugify } from "@/lib/utils";
-
 export function Title({ text }: { text: string }) {
   return (
     <div className="border-b w-full">
