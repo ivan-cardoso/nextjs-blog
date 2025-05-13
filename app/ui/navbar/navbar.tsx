@@ -45,28 +45,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Category } from "@/lib/generated/prisma";
 import { manrope } from "../fonts";
 
-// Example data for dropdown items
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Sub Item 1",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content.",
-  },
-  {
-    title: "Sub Item 2",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Sub Item 3",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task.",
-  },
-];
-
 interface NavbarProps {
   categories: Category[];
 }
@@ -93,44 +71,45 @@ export function Navbar({ categories }: NavbarProps) {
 
         {/* Desktop */}
         <div className="hidden md:flex flex-1">
-          {" "}
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
-                    // navigationMenuTriggerStyle(), // Use this style for consistency
-                    "text-primary-text hover:text-foreground text-md"
+                    "text-primary-text hover:text-foreground text-md hover:bg-accent/50 h-10",
+                    "data-[state=open]:bg-accent/50 data-[state=open]:focus:bg-accent/50 data-[state=open]:hover:bg-accent/50"
                   )}
                 >
                   Categories
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                  <ul className="grid gap-1 border-none p-2 md:w-72 md:grid-cols-2 lg:w-72 rounded-none">
                     {categories.map((cat: Category) => (
-                      <ListItem
+                      <Link
                         key={cat.id}
-                        title={cat.name}
                         href={`/blog/${slugify(cat.name)}`}
+                        className="flex items-center justify-center w-full h-10 p-0 text-muted-foreground hover:bg-accent hover:text-highlight transition-transform duration-200"
                       >
-                        {cat.name}
-                      </ListItem>
+                        <p className="font-bold text-center w-full uppercase p-0 m-0 line-clamp-0 text-sm   ">
+                          {cat.name}
+                        </p>
+                      </Link>
                     ))}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <Link href="/about" legacyBehavior passHref>
-                  <NavigationMenuLink
-                    className={cn(
-                      // navigationMenuTriggerStyle(), // Use this style for consistency
-                      "text-primary-text hover:text-foreground text-md"
-                    )}
-                  >
-                    About
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink
+                  href="/blog/about"
+                  className={cn(
+                    "w-28 text-center",
+                    "text-primary-text hover:text-foreground text-md hover:bg-accent/50 ",
+                    "data-[state=open]:bg-accent/50 data-[state=open]:focus:bg-accent/50 data-[state=open]:hover:bg-accent/50"
+                  )}
+                >
+                  About
+                </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
