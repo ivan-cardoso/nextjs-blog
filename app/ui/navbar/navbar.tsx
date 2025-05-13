@@ -3,17 +3,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import {
-  Menu,
-  Search,
-  Github,
-  Moon,
-  Sun,
-  X,
-  Sparkles,
-  LayoutGrid,
-  User,
-} from "lucide-react"; // Added more icons
+import { Menu, Search, Github, Moon, Sun, X } from "lucide-react"; // Added more icons
 
 import { cn, slugify } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -30,17 +20,10 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"; // Import Accordion components
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Category } from "@/lib/generated/prisma";
 import { manrope } from "../fonts";
@@ -56,11 +39,11 @@ export function Navbar({ categories }: NavbarProps) {
   return (
     <header className=" z-50 w-full  bg-background  px-0 md:px-10">
       <div
-        className={`${manrope.className} border-b  container px-6 md:px-0 flex h-16 md:h-24 2xl:h-28 max-w-screen-2xl items-center `}
+        className={`${manrope.className} border-b px-6 md:px-0 flex h-16 md:h-24 2xl:h-28  items-center `}
       >
         <Link
           href="/blog"
-          className="mr-6 flex items-center space-x-2 text-lg md:text-xl font-bold tracking-tight"
+          className="mr-6 flex items-center space-x-2 text-lg md:text-xl 2xl:text-2xl font-bold tracking-tight hover:text-highlight"
         >
           <span>Ivan Cardoso</span>
         </Link>
@@ -72,8 +55,9 @@ export function Navbar({ categories }: NavbarProps) {
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
-                    "text-primary-text hover:text-foreground text-md hover:bg-accent/50 h-10",
-                    "data-[state=open]:bg-accent/50 data-[state=open]:focus:bg-accent/50 data-[state=open]:hover:bg-accent/50"
+                    "text-primary-text text-sm 2xl:text-base 3xl:text-lg font-semibold hover:bg-background hover:text-highlight h-10 uppercase",
+                    "data-[state=open]:bg-background data-[state=open]:focus:bg-background data-[state=open]:hover:bg-background",
+                    "data-[state=open]:text-highlight data-[state=open]:focus:text-highlight data-[state=open]:hover:text-highlight"
                   )}
                 >
                   Categories
@@ -86,7 +70,7 @@ export function Navbar({ categories }: NavbarProps) {
                         href={`/blog/${slugify(cat.name)}`}
                         className="flex items-center justify-center w-full h-10 p-0 text-muted-foreground hover:bg-accent hover:text-highlight transition-transform duration-200"
                       >
-                        <p className="font-bold text-center w-full uppercase p-0 m-0 line-clamp-0 text-sm   ">
+                        <p className="font-bold text-center w-full uppercase p-0 m-0 line-clamp-0 text-sm 2xl:text-base 3xl:text-lg   ">
                           {cat.name}
                         </p>
                       </Link>
@@ -100,8 +84,8 @@ export function Navbar({ categories }: NavbarProps) {
                   href="/blog/about"
                   className={cn(
                     "w-28 text-center",
-                    "text-primary-text hover:text-foreground text-md hover:bg-accent/50 ",
-                    "data-[state=open]:bg-accent/50 data-[state=open]:focus:bg-accent/50 data-[state=open]:hover:bg-accent/50"
+                    "text-primary-text  text-sm 2xl:text-base 3xl:text-lg font-semibold hover:bg-background hover:text-highlight uppercase",
+                    "data-[state=open]:bg-none data-[state=open]:focus:bg-none data-[state=open]:hover:bg-none"
                   )}
                 >
                   About
@@ -111,25 +95,45 @@ export function Navbar({ categories }: NavbarProps) {
           </NavigationMenu>
         </div>
 
-        <div className="hidden md:flex items-center space-x-2 ml-auto">
-          <Button variant="ghost" size="icon" aria-label="Search">
+        <div className="hidden md:flex items-center space-x-5 ml-auto">
+          {/* FILTER FUNCTIONALITY */}
+          {/* <Button variant="ghost" size="icon" aria-label="Search">
             <Search className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="GitHub"
-            asChild // Use asChild to make the button a link anchor
+          </Button> */}
+          <Link
+            href="https://linkedin.com/in/ivan--cardoso"
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "text-primary-text text-sm 2xl:text-base 3xl:text-lg  hover:text-highlight uppercase"
+            )}
           >
-            <Link
-              href="https://github.com/ivan-cardoso"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Github className="h-5 w-5" />
-            </Link>
-          </Button>
-          <Button
+            LinkedIn
+          </Link>
+          <Link
+            href="https://ivancardoso.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "text-primary-text text-sm 2xl:text-base 3xl:text-lg  hover:text-highlight uppercase"
+            )}
+          >
+            Portfolio
+          </Link>
+
+          <Link
+            href="https://github.com/ivan-cardoso"
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "text-primary-text text-sm 2xl:text-base 3xl:text-lg  hover:text-highlight uppercase"
+            )}
+          >
+            GitHub
+          </Link>
+
+          {/* CHANGE THEME */}
+          {/* <Button
             variant="ghost"
             size="icon"
             aria-label="Toggle Theme"
@@ -140,7 +144,7 @@ export function Navbar({ categories }: NavbarProps) {
             ) : (
               <Moon className="h-5 w-5" />
             )}
-          </Button>
+          </Button> */}
         </div>
         {/* Desktop END */}
 
@@ -158,7 +162,8 @@ export function Navbar({ categories }: NavbarProps) {
               side="left"
               className={cn(
                 "w-full p-0 font-geist",
-                "[&>button[class*='rounded-xs']]:hidden"
+                "[&>button[class*='rounded-xs']]:hidden",
+                "border-r-0"
               )}
             >
               <SheetClose asChild>
@@ -212,39 +217,11 @@ export function Navbar({ categories }: NavbarProps) {
                     </>
                   )}
 
-                  {/* {categories && categories.length > 0 && (
-                    <Accordion type="single" collapsible className="w-full">
-                      <AccordionItem value="categories" className="border-b-0">
-                        <AccordionTrigger className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium text-foreground/80  data-[state=open]:focus:bg-accent/90 data-[state=open]:hover:bg-accent/50 hover:no-underline data-[state=open]:bg-accent/80">
-                          <div className="flex items-center gap-3">
-                            <LayoutGrid className="h-5 w-5 text-muted-foreground" />
-                            <span>Categories</span>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="pl-8 pr-2 pt-1 pb-0">
-                          <div className="flex flex-col space-y-1">
-                            {categories.map((cat) => (
-                              <SheetClose asChild key={cat.id}>
-                                <Link
-                                  href={`/blog/${slugify(cat.name)}`}
-                                  className="block rounded-md px-3 py-1 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
-                                >
-                                  {cat.name}
-                                </Link>
-                              </SheetClose>
-                            ))}
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  )} */}
-
                   <SheetClose asChild>
                     <Link
                       href="/blog/about"
                       className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
                     >
-                      {/* <Sparkles className="h-5 w-5 text-muted-foreground" /> */}
                       About
                     </Link>
                   </SheetClose>
