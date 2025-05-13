@@ -55,17 +55,13 @@ export function Navbar({ categories }: NavbarProps) {
 
   return (
     <header className=" z-50 w-full  bg-background  px-0 md:px-10">
-      {/* px-4 md:px-28 lg:px-36 */}
-      {/* <header className="sticky top-0 z-50 w-full border-b  border-border/40 bg-red-400 "> */}
       <div
         className={`${manrope.className} border-b  container px-6 md:px-0 flex h-16 md:h-24 2xl:h-28 max-w-screen-2xl items-center `}
       >
         <Link
           href="/blog"
-          className="mr-6 flex items-center space-x-2 text-lg md:text-xl font-bold tracking-tight font-sans" // Adjusted text size
+          className="mr-6 flex items-center space-x-2 text-lg md:text-xl font-bold tracking-tight"
         >
-          {/* Optional: Add an actual SVG logo here */}
-          {/* <YourLogoSvg className="h-6 w-6" /> */}
           <span>Ivan Cardoso</span>
         </Link>
 
@@ -116,7 +112,6 @@ export function Navbar({ categories }: NavbarProps) {
         </div>
 
         <div className="hidden md:flex items-center space-x-2 ml-auto">
-          {" "}
           <Button variant="ghost" size="icon" aria-label="Search">
             <Search className="h-5 w-5" />
           </Button>
@@ -126,13 +121,13 @@ export function Navbar({ categories }: NavbarProps) {
             aria-label="GitHub"
             asChild // Use asChild to make the button a link anchor
           >
-            <a
-              href="https://github.com/your-repo"
+            <Link
+              href="https://github.com/ivan-cardoso"
               target="_blank"
               rel="noreferrer"
             >
               <Github className="h-5 w-5" />
-            </a>
+            </Link>
           </Button>
           <Button
             variant="ghost"
@@ -150,12 +145,10 @@ export function Navbar({ categories }: NavbarProps) {
         {/* Desktop END */}
 
         {/* Mobile Navigation Trigger */}
-        <div
-          className={`flex flex-1 items-center justify-end md:hidden ${manrope.variable}`}
-        >
+        <div className={`flex flex-1 items-center justify-end md:hidden `}>
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="mr-2">
+              <Button variant="ghost" size="icon" className="mr-0">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open main menu</span>
               </Button>
@@ -164,7 +157,7 @@ export function Navbar({ categories }: NavbarProps) {
             <SheetContent
               side="left"
               className={cn(
-                "w-full max-w-sm p-0 font-sans",
+                "w-full p-0 font-geist",
                 "[&>button[class*='rounded-xs']]:hidden"
               )}
             >
@@ -172,42 +165,57 @@ export function Navbar({ categories }: NavbarProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-3 right-3 z-10 text-muted-foreground hover:bg-accent rounded-full"
+                  className="absolute top-3 right-3 z-10 text-muted-foreground hover:bg-accent rounded-full mr-2"
                   aria-label="Close menu"
                 >
                   <X className="h-5 w-5" />
                 </Button>
               </SheetClose>
 
-              <SheetHeader className="border-b p-4">
+              <SheetHeader className="border-b px-6">
                 <SheetTitle>
                   <SheetClose asChild>
                     <Link
                       href="/blog"
-                      className="font-bold text-lg flex items-center gap-2"
+                      className="font-semibold text-lg flex items-center gap-2 font-sans"
                     >
-                      Blog
+                      Ivan Cardoso
                     </Link>
                   </SheetClose>
                 </SheetTitle>
               </SheetHeader>
 
               <ScrollArea className="h-[calc(100vh-140px)] px-4 py-4">
-                <nav className="flex flex-col space-y-1">
+                <nav className="flex flex-col">
                   <SheetClose asChild>
                     <Link
                       href="/blog"
-                      className="flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                      className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
                     >
-                      <Sparkles className="h-5 w-5 text-muted-foreground" />
-                      <span>Latest</span>
+                      {/* <Sparkles className="h-5 w-5 text-muted-foreground" /> */}
+                      Latest
                     </Link>
                   </SheetClose>
 
                   {categories && categories.length > 0 && (
+                    <>
+                      {categories.map((cat) => (
+                        <SheetClose asChild key={cat.id}>
+                          <Link
+                            href={`/blog/${slugify(cat.name)}`}
+                            className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                          >
+                            {cat.name}
+                          </Link>
+                        </SheetClose>
+                      ))}
+                    </>
+                  )}
+
+                  {/* {categories && categories.length > 0 && (
                     <Accordion type="single" collapsible className="w-full">
                       <AccordionItem value="categories" className="border-b-0">
-                        <AccordionTrigger className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground hover:no-underline data-[state=open]:bg-accent">
+                        <AccordionTrigger className="flex w-full items-center justify-between rounded-md px-3 py-2 text-base font-medium text-foreground/80  data-[state=open]:focus:bg-accent/90 data-[state=open]:hover:bg-accent/50 hover:no-underline data-[state=open]:bg-accent/80">
                           <div className="flex items-center gap-3">
                             <LayoutGrid className="h-5 w-5 text-muted-foreground" />
                             <span>Categories</span>
@@ -219,7 +227,7 @@ export function Navbar({ categories }: NavbarProps) {
                               <SheetClose asChild key={cat.id}>
                                 <Link
                                   href={`/blog/${slugify(cat.name)}`}
-                                  className="block rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+                                  className="block rounded-md px-3 py-1 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
                                 >
                                   {cat.name}
                                 </Link>
@@ -229,15 +237,15 @@ export function Navbar({ categories }: NavbarProps) {
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
-                  )}
+                  )} */}
 
                   <SheetClose asChild>
                     <Link
-                      href="/about"
-                      className="flex items-center gap-3 rounded-md px-3 py-2 text-base font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                      href="/blog/about"
+                      className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
                     >
-                      <User className="h-5 w-5 text-muted-foreground" />
-                      <span>About</span>
+                      {/* <Sparkles className="h-5 w-5 text-muted-foreground" /> */}
+                      About
                     </Link>
                   </SheetClose>
                 </nav>
