@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="mt-16 h-32 px-6 md:px-10">
-      <div className="border-t py-8 h-full flex flex-col md:flex-row items-center justify-between text-sm 2xl:text-base 3xl:text-lg text-muted-foreground font-geist">
-        <p className="uppercase">
+    <footer className="mt-16 h-32 px-0 md:px-10">
+      <div className="border-t py-8 px-6 md:px-0 text-center md:text-start  h-full flex flex-col md:flex-row items-center justify-between text-sm 2xl:text-base 3xl:text-lg text-muted-foreground font-geist">
+        <p className="uppercase max-w-xs md:max-w-full">
           Made in Argentina — All rights reserved, Ivan Cardoso{" "}
           {new Date().getFullYear()}
         </p>
