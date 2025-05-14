@@ -1,9 +1,8 @@
-// src/components/Navbar.tsx
 "use client";
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Search, Github, Moon, Sun, X } from "lucide-react"; // Added more icons
+import { Menu, Search, Moon, Sun, X } from "lucide-react";
 
 import { cn, slugify } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -181,7 +180,7 @@ export function Navbar({ categories }: NavbarProps) {
                   <SheetClose asChild>
                     <Link
                       href="/blog"
-                      className="font-semibold text-lg flex items-center gap-2 font-sans"
+                      className="font-semibold text-lg flex items-center gap-2 font-sans hover:text-highlight w-fit"
                     >
                       Ivan Cardoso
                     </Link>
@@ -194,9 +193,8 @@ export function Navbar({ categories }: NavbarProps) {
                   <SheetClose asChild>
                     <Link
                       href="/blog"
-                      className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                      className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80  hover:text-highlight w-fit"
                     >
-                      {/* <Sparkles className="h-5 w-5 text-muted-foreground" /> */}
                       Latest
                     </Link>
                   </SheetClose>
@@ -207,7 +205,7 @@ export function Navbar({ categories }: NavbarProps) {
                         <SheetClose asChild key={cat.id}>
                           <Link
                             href={`/blog/${slugify(cat.name)}`}
-                            className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                            className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80  hover:text-highlight w-fit"
                           >
                             {cat.name}
                           </Link>
@@ -219,7 +217,7 @@ export function Navbar({ categories }: NavbarProps) {
                   <SheetClose asChild>
                     <Link
                       href="/blog/about"
-                      className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80 hover:bg-accent hover:text-accent-foreground"
+                      className="flex items-center gap-3 uppercase rounded-md px-3 py-1 text-2xl font-medium text-foreground/80  hover:text-highlight w-fit"
                     >
                       About
                     </Link>
@@ -229,43 +227,6 @@ export function Navbar({ categories }: NavbarProps) {
 
               {/* Footer Icons */}
               <div className="absolute bottom-0 left-0 right-0 border-t p-4 flex items-center justify-center space-x-5 bg-background h-16">
-                {/* <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Search"
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <Search className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="GitHub"
-                  asChild
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <Link
-                    href="https://github.com/your-github"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <Github className="h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Toggle Theme"
-                  onClick={toggleTheme}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  {isDarkMode ? (
-                    <Sun className="h-5 w-5" />
-                  ) : (
-                    <Moon className="h-5 w-5" />
-                  )}
-                </Button> */}
-
                 <Link
                   href="https://linkedin.com/in/ivan--cardoso"
                   target="_blank"
