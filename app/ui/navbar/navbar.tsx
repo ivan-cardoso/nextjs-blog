@@ -188,8 +188,15 @@ export function Navbar({ categories }: NavbarProps) {
                 </SheetTitle>
               </SheetHeader>
 
-              <ScrollArea className="h-[calc(100vh-140px)] px-4 py-4">
+              <ScrollArea className="h-[calc(100vh-140px)] px-4 ">
                 <nav className="flex flex-col">
+                  <p
+                    className={cn(
+                      "px-3 pt-2 pb-1 text-primary-text font-bold text-sm 2xl:text-base 3xl:text-lg w-fit uppercase"
+                    )}
+                  >
+                    Blog
+                  </p>
                   <SheetClose asChild>
                     <Link
                       href="/blog"
