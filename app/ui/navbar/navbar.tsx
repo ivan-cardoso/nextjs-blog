@@ -14,7 +14,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle, // Import this for consistent styling if needed elsewhere
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -229,8 +228,8 @@ export function Navbar({ categories }: NavbarProps) {
               </ScrollArea>
 
               {/* Footer Icons */}
-              <div className="absolute bottom-0 left-0 right-0 border-t p-4 flex justify-center space-x-3 bg-background">
-                <Button
+              <div className="absolute bottom-0 left-0 right-0 border-t p-4 flex items-center justify-center space-x-5 bg-background h-16">
+                {/* <Button
                   variant="ghost"
                   size="icon"
                   aria-label="Search"
@@ -265,7 +264,39 @@ export function Navbar({ categories }: NavbarProps) {
                   ) : (
                     <Moon className="h-5 w-5" />
                   )}
-                </Button>
+                </Button> */}
+
+                <Link
+                  href="https://linkedin.com/in/ivan--cardoso"
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    "text-primary-text text-sm 2xl:text-base 3xl:text-lg  hover:text-highlight uppercase"
+                  )}
+                >
+                  LinkedIn
+                </Link>
+                <Link
+                  href="https://ivancardoso.vercel.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    "text-primary-text text-sm 2xl:text-base 3xl:text-lg  hover:text-highlight uppercase"
+                  )}
+                >
+                  Portfolio
+                </Link>
+
+                <Link
+                  href="https://github.com/ivan-cardoso"
+                  target="_blank"
+                  rel="noreferrer"
+                  className={cn(
+                    "text-primary-text text-sm 2xl:text-base 3xl:text-lg  hover:text-highlight uppercase"
+                  )}
+                >
+                  GitHub
+                </Link>
               </div>
             </SheetContent>
           </Sheet>
@@ -275,7 +306,7 @@ export function Navbar({ categories }: NavbarProps) {
   );
 }
 
-// Helper component for NavigationMenu Content items (often used in Shadcn examples)
+// Helper component for NavigationMenu
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
