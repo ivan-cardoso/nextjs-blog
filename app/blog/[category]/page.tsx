@@ -42,11 +42,17 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   });
 
   return (
-    <div className="w-full font-sans p-4 md:p-8">
-      <Title text={`Posts in ${matchedCategory.name}`} />
+    <div className="w-full pb-10 px-0 md:px-10">
+      <Title
+        text={
+          <>
+            Posts in <br /> {matchedCategory.name}`
+          </>
+        }
+      />
 
-      <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16 py-4 md:py-8">
-        <ul className="space-y-8 ">
+      <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16">
+        <ul className="">
           {posts.map((post) => {
             return <BlogPostCard post={post} key={post.id} />;
           })}

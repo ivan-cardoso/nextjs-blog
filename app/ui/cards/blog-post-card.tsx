@@ -9,7 +9,7 @@ import { slugify } from "@/lib/utils";
 export function BlogPostCard({ post }: { post: AdminPost }) {
   const formattedDate = format(new Date(post.createdAt), "MMMM d, yyyy");
   return (
-    <div className="border-b py-4 px-6 transition grid md:grid-cols-6 gap-y-2 md:gap-x-9 lg:gap-x-12 min-h-60 2xl:min-h-72 md:px-0 md:py-8">
+    <div className=" border-b py-4 px-6 transition grid md:grid-cols-6 gap-y-2 md:gap-x-9 lg:gap-x-12 min-h-60 2xl:min-h-72 md:px-0 md:py-8">
       <div className="flex flex-col md:col-span-1">
         <Link
           href={`/blog/${slugify(post.categories[0].name)}`}
