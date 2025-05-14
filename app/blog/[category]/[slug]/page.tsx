@@ -24,13 +24,23 @@ export default async function PostPage({
   }
 
   return (
-    <article className={`${manrope.variable} w-full font-sans p-4 md:p-8 `}>
+    <article className={`w-full pb-10  md:px-10`}>
       <Title text={post.title} />
-      <div className="flex flex-col md:flex-row gap-8 lg:gap-12 xl:gap-16 py-4 md:py-8">
-        <aside className="md:w-60 lg:w-42 flex-shrink-0 space-y-4 h-fit">
+      <div
+        className="
+      
+      grid grid-cols-6 
+      gap-6 lg:gap-12 py-6 md:py-8"
+      >
+        <aside
+          className="
+          col-span-6 md:col-span-1
+          px-6 md:px-0
+          mt-1 flex-shrink-0 space-y-4 h-fit"
+        >
           {post.categories && post.categories.length > 0 && (
             <div>
-              <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
+              <h3 className="text-sm 2xl:text-base uppercase font-semibold text-primary tracking-wider mb-1">
                 Filed Under
               </h3>
               <div className="space-y-1">
@@ -38,7 +48,7 @@ export default async function PostPage({
                   <Link
                     href={`/blog/${slugify(cat.name)}`}
                     key={cat.id}
-                    className="block text-sm text-sky-600 dark:text-sky-400 hover:underline leading-snug"
+                    className="text-sm uppercase font-semibold text-highlight tracking-wider md:mb-1 2xl:text-base"
                   >
                     {cat.name}
                   </Link>
@@ -48,28 +58,36 @@ export default async function PostPage({
           )}
 
           <div>
-            <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
+            <h3 className="text-sm 2xl:text-base uppercase font-semibold text-primary tracking-wider mb-1">
               Published
             </h3>
-            <p className="text-sm text-foreground/80">
+            <p className="text-sm 2xl:text-base text-foreground/80">
               {formattedDate(post.createdAt)}
             </p>
           </div>
 
           {formattedDate(post.createdAt) !== formattedDate(post.updatedAt) && (
             <div>
-              <h3 className="text-xs uppercase font-semibold text-primary tracking-wider mb-1">
+              <h3 className="text-sm 2xl:text-base uppercase font-semibold text-primary tracking-wider mb-1">
                 Last Updated
               </h3>
-              <p className="text-sm text-foreground/80">
+              <p className="text-sm 2xl:text-base text-foreground/80">
                 {formattedDate(post.updatedAt)}
               </p>
             </div>
           )}
         </aside>
 
-        <main className="flex-1 min-w-0 prose prose-lg prose-neutral dark:prose-invert font-sans">
-          <p className={`text-primary mb-4 `}>{post.description}</p>
+        <main
+          className="
+          px-6 md:px-0
+          col-span-6 md:col-span-4
+          prose md:prose-lg max-w-full 
+          2xl:prose-2xl prose-neutral dark:prose-invert "
+        >
+          <p className={`text-primary mb-4 font-medium leading-normal`}>
+            {post.description}
+          </p>
           <MDXRemote source={post.content} />
         </main>
         {/* <aside className="md:w-30 lg:w-42 flex-shrink-0 space-y-6 md:sticky md:top-24 h-fit">

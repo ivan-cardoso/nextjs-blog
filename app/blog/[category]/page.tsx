@@ -46,7 +46,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <Title
         text={
           <>
-            Posts in <br /> {matchedCategory.name}`
+            Posts in <br /> {matchedCategory.name}
           </>
         }
       />
