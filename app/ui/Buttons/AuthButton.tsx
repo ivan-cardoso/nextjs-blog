@@ -9,7 +9,9 @@ export function AuthButton() {
   if (session) {
     return (
       <div>
-        <p>Welcome, {session.user?.name}</p>
+        <p className="text-sm 2xl:text-base uppercase font-semibold text-primary tracking-wider mb-3">
+          User {session.user?.name}
+        </p>
         <Button onClick={() => signOut()}>Sign out</Button>
       </div>
     );

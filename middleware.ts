@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
   // Check if route starts with /admin
   if (req.nextUrl.pathname.startsWith("/admin")) {
     if (!token) {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/login", req.url));
       // return NextResponse.redirect(new URL("/api/auth/signin", request.url));
     }
   }
@@ -17,5 +17,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"], 
+  matcher: ["/admin/:path*"],
 };
