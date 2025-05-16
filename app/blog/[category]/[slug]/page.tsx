@@ -28,7 +28,6 @@ export default async function PostPage({
       <Title text={post.title} />
       <div
         className="
-      
       grid grid-cols-6 
       gap-6 lg:gap-12 py-6 md:py-8"
       >
