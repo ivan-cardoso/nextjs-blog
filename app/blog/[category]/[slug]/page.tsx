@@ -13,7 +13,7 @@ export default async function PostPage({
 }: {
   params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
   const post = await prisma.post.findUnique({
     where: { slug },
     include: { categories: true, tags: true },
