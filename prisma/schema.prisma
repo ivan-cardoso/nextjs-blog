@@ -1,12 +1,9 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
+  output   = "../lib/generated/prisma" // Your custom output path
 }
 
 datasource db {
@@ -14,38 +11,88 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// --- NextAuth.js Models ---
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId]) // Index for query performance
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId]) // Index for query performance
+}
+
 model User {
+  // Fields from your existing User model
   id        String   @id @default(cuid())
   name      String?
   email     String?  @unique
-  image     String?
+  image     String?  // This is used by NextAuth.js for profile images
   posts     Post[]
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) // Your existing createdAt
+
+  // Fields required by NextAuth.js (if not already present)
+  emailVerified DateTime? // NextAuth.js uses this
+
+  // Relations required by NextAuth.js
+  accounts Account[]
+  sessions Session[]
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// --- Your Existing Application Models ---
+
 model Post {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   title       String
   description String
-  slug        String   @unique
-  content     Json     // rich text format
-  published   Boolean  @default(false)
+  slug        String     @unique
+  content     String
+  published   Boolean    @default(false)
   authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
-  tags        Tag[]    @relation("PostTags")
+  author      User       @relation(fields: [authorId], references: [id])
+  tags        Tag[]      @relation("PostTags")
   categories  Category[] @relation("PostCategories")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Tag {
-  id    String  @id @default(cuid())
-  name  String  @unique
-  posts Post[]  @relation("PostTags")
+  id    String @id @default(cuid())
+  name  String @unique
+  posts Post[] @relation("PostTags")
 }
 
 model Category {
-  id    String  @id @default(cuid())
-  name  String  @unique
-  posts Post[]  @relation("PostCategories")
+  id    String @id @default(cuid())
+  name  String @unique
+  posts Post[] @relation("PostCategories")
 }

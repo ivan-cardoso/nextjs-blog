@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: [
@@ -18,6 +19,10 @@ const config: Config = {
           600: "#2F6FEB",
         },
       },
+      fontFamily: {
+        sans: ["var(--font-manrope)", "sans-serif"],
+        geist: ["var(--font-geist-sans)", "sans-serif"],
+      },
     },
     keyframes: {
       shimmer: {
@@ -28,6 +33,6 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
+  plugins: [typography],
 };
 export default config;

@@ -1,0 +1,55 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import TogglePublishButton from "../Buttons/TogglePublishButton";
+import { AdminPost } from "@/lib/definitions";
+import { useRouter } from "next/navigation";
+import { DeleteButton } from "../admin/delete-button";
+
+export function PostCard({ post }: { post: AdminPost }) {
+  const router = useRouter();
+
+  return (
+    <div className="rounded-md border bg-background p-4 shadow-sm hover:shadow transition flex flex-col gap-y-2">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">{post.title}</h3>
+        <Badge variant={post.published ? "default" : "secondary"}>
+          {post.published ? "Published" : "Draft"}
+        </Badge>
+      </div>
+      <div className="flex items-center justify-between">
+        {post.categories.map((cat) => {
+          return (
+            <Badge key={cat.id} variant={"default"}>
+              {cat.name}
+            </Badge>
+          );
+        })}
+      </div>
+      <div className="flex items-center gap-x-1">
+        {post.tags.map((tag) => {
+          return (
+            <Badge key={tag.id} variant={"secondary"}>
+              {tag.name}
+            </Badge>
+          );
+        })}
+      </div>
+      <p className="text-sm text-muted-foreground mt-2 truncate">
+        {post.description}
+      </p>
+      <div className="mt-4 flex gap-2 justify-between">
+        <span>
+          <Link href={`/admin/posts/${post.id}/edit`}>
+            <Button size="sm" variant="outline">
+              📝 Edit
+            </Button>
+          </Link>
+          <TogglePublishButton postId={post.id} published={post.published} />
+        </span>
+
+        <DeleteButton postId={post.id} />
+      </div>
+    </div>
+  );
+}
