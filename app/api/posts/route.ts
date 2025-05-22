@@ -5,7 +5,7 @@ import { slugify } from "@/lib/utils";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, content, category, description, tags, categories } = body;
+    const { title, content, description, tags, categories } = body;
 
     if (!title || !content) {
       return NextResponse.json(
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 🔒 Use dummy author for now
+    // Dummy author
     const author = await prisma.user.findUnique({
       where: { email: "admin@example.com" },
     });
@@ -28,8 +28,8 @@ export async function POST(req: Request) {
         title,
         content,
         description,
-        slug: slugify(title), // optional: useful for your future post detail page
-        authorId: author.id, // You can replace this with session.user.id later
+        slug: slugify(title),
+        authorId: author.id, // Replace this with session.user.id later
         tags: {
           connectOrCreate: tags.map((tag: string) => ({
             where: { name: tag },
