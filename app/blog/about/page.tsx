@@ -4,15 +4,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export default async function BlogPage() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      categories: true,
-      tags: true,
-    },
-    orderBy: { createdAt: "desc" },
-  });
-
   return (
     <section className="pb-10 px-0 md:px-10">
       <Title

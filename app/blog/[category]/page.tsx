@@ -4,13 +4,11 @@ import { notFound } from "next/navigation";
 import { BlogPostCard } from "@/app/ui/cards/blog-post-card";
 import { Title } from "@/app/ui/title/title";
 
-interface CategoryPageProps {
-  params: {
-    category: string;
-  };
-}
-
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
   const { category: categorySlug } = await params;
 
   const categories = await prisma.category.findMany();
