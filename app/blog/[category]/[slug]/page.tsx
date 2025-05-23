@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { formattedDate, slugify } from "@/lib/utils";
-import "@/app/ui/mdx.css";
-import { manrope } from "@/app/ui/fonts";
 import Link from "next/link";
 import { Title } from "@/app/ui/title/title";
+import { mdxProcessingOptions } from "@/lib/mdx";
+import "@/app/ui/mdx.css";
 
 export default async function PostPage({
   params,
@@ -82,12 +82,12 @@ export default async function PostPage({
           px-6 md:px-0
           col-span-6 md:col-span-4
           prose md:prose-lg max-w-full 
-          2xl:prose-2xl prose-neutral dark:prose-invert "
+          2xl:prose-2xl dark:prose-invert "
         >
           <p className={`text-primary mb-4 font-medium leading-normal`}>
             {post.description}
           </p>
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} options={mdxProcessingOptions} />
         </main>
         {/* <aside className="md:w-30 lg:w-42 flex-shrink-0 space-y-6 md:sticky md:top-24 h-fit">
         </aside> */}

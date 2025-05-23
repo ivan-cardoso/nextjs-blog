@@ -23,6 +23,23 @@ const config: Config = {
         sans: ["var(--font-manrope)", "sans-serif"],
         geist: ["var(--font-geist-sans)", "sans-serif"],
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            pre: {
+              // Example: Let rehype-pretty-code handle background and color
+              backgroundColor: null,
+              // color: null,
+              // You can still define padding, margins, font-family here if needed
+              // fontFamily: theme('fontFamily.mono').join(','),
+              // padding: theme('spacing.4'),
+            },
+            "code::before": { content: "none" }, // Remove backticks
+            "code::after": { content: "none" }, // Remove backticks
+            // Add more overrides if needed
+          },
+        },
+      }),
     },
     keyframes: {
       shimmer: {
